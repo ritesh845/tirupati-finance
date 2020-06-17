@@ -16,4 +16,8 @@ class ClientLoan extends Model
     public function loan_mast(){
     	return $this->belongsTo('App\Models\LoanMast','loan_mast_id');
     }
+     public function client(){
+    	return $this->belongsTo('App\Models\Client','client_id');
+    }
+
 }

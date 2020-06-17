@@ -26,7 +26,8 @@ const INTEREST = [
 ];
 const PAYSTATUS = [
     0 => 'Pending',
-    1 => 'Complete'
+    1 => 'Complete',
+    2 => 'Pending for approve'
 ];
 
 const PAYMENTSTATUS = [
@@ -93,9 +94,9 @@ const LOANSTATUS = [
 ];
 const PAYMENTMODE = [
     1 => 'Cash',
-    2 => 'Cheque',
-    3 => 'NEFT',
-    4 => 'Credit'
+    // 2 => 'Cheque',
+    2 => 'NEFT',
+    // 4 => 'Credit'
 ];
 const LOANTYPE = [
 	1 => 'Personal Loan',

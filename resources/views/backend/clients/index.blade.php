@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card border-top-primary">
-				<div class="card-header ">Clients (0)
+				<div class="card-header ">Clients ({{count($clients)}})
 					<a href="{{route('client.create')}}" class="pull-right btn btn-sm btn-primary"><i class="fa fa-plus "></i> Add New</a>
 				</div>
 				<div class="card-body">
@@ -31,7 +31,7 @@
 										<th>#</th>
 										<th>Name</th>
 										<th>Mobile</th>
-										<th>Addhar Card</th>
+										<th>Aadhar Card</th>
 										<th>Agreement Date</th>
 										<th>Action</th>
 									</tr>

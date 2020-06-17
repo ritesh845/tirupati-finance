@@ -28,7 +28,7 @@
 
   {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> --}}
-
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
 </head>
 
 <body id="page-top">
@@ -73,22 +73,32 @@
         </div>
       </li>
     @endrole
-      @role('admin')
-      <!-- Nav Item Members -->
+    @role('client')
       <li class="nav-item">
         <a class="nav-link" href="{{route('profile')}}">
           <i class="fas fa-fw fa-user"></i>
           <span>Profile</span></a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="{{route('loan.index')}}">
+          <i class="fas fa-fw fa-money"></i>
+          <span>My Loans</span></a>
+      </li>
+
+    @endrole
+
+      @role('admin')
+      <!-- Nav Item Members -->
+      
+      <li class="nav-item">
         <a class="nav-link" href="{{route('client.index')}}">
           <i class="fas fa-fw fa-users"></i>
           <span>Clients</span></a>
       </li>
-     {{--  <li class="nav-item">
-        <a class="nav-link" href="">
+      {{-- <li class="nav-item">
+        <a class="nav-link" href="{{route('loan.index')}}">
           <i class="fas fa-fw fa-money"></i>
-          <span>Loans</span></a>
+          <span>My Loans</span></a>
       </li> --}}
       <li class="nav-item">
         <a class="nav-link" href="{{route('finance.index')}}">
@@ -96,7 +106,7 @@
           <span>Finance Amount</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{route('payment.index')}}">
           <i class="fas fa-fw fa-money"></i>
           <span>Payment</span></a>
       </li>
@@ -105,6 +115,21 @@
           <a class="nav-link" href="{{route('contact.index')}}">
           <i class="fas fa-fw fa-phone"></i>
           <span>Contact</span></a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="{{route('message')}}">
+          <i class="fas fa-fw fa-envelope"></i>
+          <span>Message</span></a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="">
+          <i class="fas fa-fw fa-file"></i>
+          <span>Reports</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('employee.index')}}">
+          <i class="fas fa-fw fa-users"></i>
+          <span>Employee</span></a>
       </li>
       @endrole
       {{-- <!-- Divider -->

@@ -172,10 +172,7 @@ class ClientsController extends Controller
         return $path;
     }
 
-    public function noc_form($id){
-        $client = Client::find($id);
-        return view('backend.clients.noc_form',compact('client'));
-    }
+   
     public function loanCreate($id){
         $client = Client::find($id);
 

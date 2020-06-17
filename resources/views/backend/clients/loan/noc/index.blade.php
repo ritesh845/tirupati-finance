@@ -1,12 +1,12 @@
 @extends('backend.layouts.main')
-@section('page_name','Clients')
+@section('page_name','Loan Noc')
 @section('content')
 <div class="row">	
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header">
 				No Objection Certificate
-				<a href="{{route('client.index')}}" class="btn btn-sm btn-primary pull-right"><i class="fa fa-angle-left"></i> Back</a>
+				<a href="{{route('loan.show',$loan->id)}}" class="btn btn-sm btn-primary pull-right"><i class="fa fa-angle-left"></i> Back</a>
 			</div>
 			<div class="card-body">
 				<div class="row ">
@@ -28,16 +28,16 @@
 										<h5 class="text-primary text-center"><i>NO OBJECTION CERTIFICATE</i></h5>	
 									</div>
 									<div class="col-md-12 mt-3">
-										<p><b>Name:</b> {{$client->name}}</p>
-										<p><b>Father Name:</b> {{$client->father_name}}</p>
+										<p><b>Name:</b> {{$loan->client->name}}</p>
+										<p><b>Father Name:</b> {{$loan->client->father_name}}</p>
 										<p><b>Vehicle Number:</b>
-										{{$client->vehicle_no}} </p>
+										{{$loan->vehicle_no}} </p>
 										<p><b>Engine Number:</b>
-										{{$client->vehicle_engine_no}} </p>
+										{{$loan->vehicle_engine_no}} </p>
 										<p><b>Chassis Number:</b>
-										{{$client->vehicle_chassis_no}} </p>
+										{{$loan->vehicle_chassis_no}} </p>
 										<p><b>Certificate that</b></p>
-										<p>Vehicle number on amount{{$client->finance_amount}}......................... was given</p>
+										{{-- <p>Vehicle number on amount <i class="fa fa-rupee"></i>{{$loan->finance_amount}}......................... was given</p> --}}
 									</div>
 									
 								</div>

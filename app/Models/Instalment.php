@@ -16,4 +16,7 @@ class Instalment extends Model
     public function client_loan(){
     	return $this->belongsTo('App\Models\ClientLoan','loan_id');
     }
+    public function payment(){
+    	return $this->belongsTo('App\Models\Payment','id','instalment_id');
+    }
 }

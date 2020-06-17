@@ -30,6 +30,7 @@
   <script src="{{asset('js/notify.min.js')}}"></script>
   <script src="{{asset('js/jquery.validate.min.js')}}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
   <!-- Page level plugins -->
   {{-- <script src="{{asset('vendor/chart.js/Chart.min.js')}}"></script> --}}
 
