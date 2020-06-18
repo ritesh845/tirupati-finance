@@ -13,8 +13,9 @@ use Auth;
 class PaymentController extends Controller
 {
 	public function index(){
-		$payments = Payment::all();
-		return view('backend.payment.index');
+		$payments = Payment::with('instalment.client')->orderBy('id','DESC')->get();
+
+		return view('backend.payment.index',compact('payments'));
 		
 	}
     public function show($id){
@@ -110,6 +111,7 @@ class PaymentController extends Controller
           
       $input['instalment_id'] = $instalment->id;     
       $input['loan_id'] = $instalment->loan_id;    
+      $input['status'] = '2';    
 
       Payment::create($input);
       $instalment->update(['status' => '2','pay' => '1','amount_due' => $input['amount']]);

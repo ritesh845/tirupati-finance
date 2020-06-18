@@ -36,8 +36,10 @@ const PAYMENTSTATUS = [
     2 => 'Successful'
 ];
 
-const PENALTYMONTH = '500';
-const PENALTY = "10";
+const PENALTYMONTH = 500;
+const PENALTY = 12;
+const PENALTYDAYS = 10;
+const PENALTYDAYSMONTH = 30;
 
 const GENDER = [
     1 => 'Male',

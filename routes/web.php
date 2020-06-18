@@ -56,3 +56,6 @@ Route::post('/message/store','HomeController@messageStore')->name('message.store
 Route::resource('employee','Backend\EmployeeController');
 //Loans 
 Route::get('/loan/index','Backend\LoanController@index')->name('loan.index');
+
+
+Route::get('instalment/reminder','HomeController@beforeDateInstalmentReminder');
