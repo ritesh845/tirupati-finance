@@ -256,7 +256,7 @@
 		function finance_amount_fetch(type,old=""){
 			$.ajax({
 				type:'get',
-				url:"/finance/fetch/"+type,
+				url:"/fetch/finance/"+type,
 				success:function(res){
 					$('select[name="finance_amount"]').empty();
 					$('select[name="finance_amount"]').append('<option value="">Select Finance Amount</option>');

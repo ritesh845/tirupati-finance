@@ -258,7 +258,7 @@
 		function finance_amount_fetch(type,old_finance=""){
 			$.ajax({
 				type:'get',
-				url:"/finance/fetch/"+type,
+				url:"/fetch/finance/"+type,
 				success:function(res){
 					// console.log(res);
 					$('select[name="finance_amount"]').empty();
