@@ -277,7 +277,7 @@
 			if(id != ''){
 				$.ajax({
 					type: 'post',
-					url: '/finance/loan_fetch/',
+					url: '/loan_fetch/',
 					data:{id:id,instalment_start_date:instalment_start_date},
 					success:function(res){
 

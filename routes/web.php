@@ -38,9 +38,10 @@ Route::post('/verify', 'VerifyController@postVerfiy')->name('verify');
 
 //Finance Amount
 Route::resource('/finance','Backend\FinanceController');
+
 Route::get('/fetch/finance/{vehicle_type}','Backend\FinanceController@fetch')->name('finance.fetch');
 
-Route::post('/finance/loan_fetch/','Backend\FinanceController@loan_fetch')->name('finance.loan_fetch');
+Route::post('/loan_fetch/','Backend\FinanceController@loan_fetch')->name('finance.loan_fetch');
 
 //Payment
 Route::resource('payment','PaymentController');

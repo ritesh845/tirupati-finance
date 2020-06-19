@@ -272,7 +272,7 @@
 		function instalment_list(id,instalment_date=""){
 			$.ajax({
 				type: 'post',
-				url: '/finance/loan_fetch/',
+				url: '/loan_fetch/',
 				data:{id:id,instalment_date:instalment_date},
 				success:function(res){
 
