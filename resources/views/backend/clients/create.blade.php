@@ -5,16 +5,23 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header">
+				<div class="row">
+					<div class="col-md-12">
+						Client Create
+						<a href="{{route('client.index')}}" class="btn btn-sm btn-primary pull-right ml-2"><i class="fa fa-angle-left"></i> Back</a>
+					</div>
+				</div>
+				<hr>
 				<ul class="nav nav-tabs">
 				    <li class="nav-item">
 				      <a class="nav-link active" data-toggle="tab" href="#basic_details">Basic Details</a>
 				    </li>
-				    <li class="nav-item">
+				   {{--  <li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#vehicle_details">Vehicle Details</a>
 				    </li>
 				    <li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#finance_details">Finance Details</a>
-				    </li>
+				    </li> --}}
 				    <li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#guarantor_details">Guarantor Details</a>
 				    </li>
@@ -22,7 +29,6 @@
 				      <a class="nav-link" data-toggle="tab" href="#document_details">Document Details</a>
 				    </li>
 				</ul>
-
 			</div>
 			{{Form::open(array('route' => 'client.store', 'method' => 'post','enctype' => 'multipart/form-data'))}}
 			<div class="card-body">	
@@ -36,6 +42,15 @@
 								{{Form::label('name','Full Name',['class'=>'required'])}}
 								{{Form::input('text','name',old('name'),['class'=>'form-control','placeholder'=>'Client Name','required'=>'required'])}}
 								@error('name')
+							        <span class="text-danger" role="alert">
+							            <strong>{{ $message }}</strong>
+							        </span>
+							    @enderror
+							</div>
+							<div class="col-md-6 form-group">
+								{{Form::label('father_name','Father Name',['class'=>'required'])}}
+								{{Form::input('text','father_name',old('father_name'),['class'=>'form-control','placeholder'=>'Father Name','required'=>'required'])}}
+								@error('father_name')
 							        <span class="text-danger" role="alert">
 							            <strong>{{ $message }}</strong>
 							        </span>
@@ -60,7 +75,7 @@
 							    @enderror
 							</div>
 							<div class="col-md-6 form-group">
-								{{Form::label('mobile','Mobile Number',['class'=>'required'])}}
+								{{Form::label('mobile','Mobile Number',['class'=>'required'])}}<span class="text-muted">(Fill correct this is username of client)</span> 
 								{{Form::input('text','mobile',old('mobile'),['class'=>'form-control','placeholder'=>'Mobile Number','required'=>'required','oninput' =>"this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"])}}
 								@error('mobile')
 							        <span class="text-danger" role="alert">
@@ -107,7 +122,7 @@
 							</div>
 							<div class="col-md-6 form-group">
 								{{Form::label('address','Address',['class'=>'required'])}}
-								{{Form::input('text','address',old('address'),['class'=>'form-control','placeholder'=>'Enter Address'])}}
+								{{Form::input('text','address',old('address'),['class'=>'form-control','placeholder'=>'Enter Address','required' => 'required'])}}
 								@error('address')
 							        <span class="text-danger" role="alert">
 							            <strong>{{ $message }}</strong>
@@ -116,7 +131,7 @@
 							</div>
 							<div class="col-md-6 form-group">
 								{{Form::label('zip_code','Zip Code',['class'=>'required'])}}
-								{{Form::input('text','zip_code',old('zip_code'),['class'=>'form-control','placeholder'=>'Enter Zip Code','oninput' =>"this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"])}}
+								{{Form::input('text','zip_code',old('zip_code'),['class'=>'form-control','placeholder'=>'Enter Zip Code','oninput' =>"this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');",'required' => 'required'])}}
 								@error('zip_code')
 							        <span class="text-danger" role="alert">
 							            <strong>{{ $message }}</strong>
@@ -151,6 +166,16 @@
 							    @enderror
 							</div>
 							
+							<div class="col-md-6 form-group">
+								{{Form::label('registration_date','Registration Date',['class' => 'required'])}}
+								{{Form::input('text','registration_date',old('registration_date') ?? date('Y-m-d'),['class'=>'form-control datepicker','placeholder'=>'Registration Date','readonly' => 'readonly'])}}
+								@error('registration_date')
+							        <span class="text-danger" role="alert">
+							            <strong>{{ $message }}</strong>
+							        </span>
+							    @enderror
+							</div>		
+
 							<div class="col-md-6 form-group">
 								{{Form::label('office_position','Office Position')}}
 								{{Form::input('text','office_position',old('office_position'),['class'=>'form-control','placeholder'=>'Office Year'])}}
@@ -225,7 +250,7 @@
 							</div>
 				    	</div>
 				    </div>
-				    <div id="vehicle_details" class="container tab-pane fade" >
+				    {{-- <div id="vehicle_details" class="container tab-pane fade" >
 				    	<div class="row">
 							<div class="col-md-6 form-group">
 								{{Form::label('vehicle_name','Vehicle Name',['class' => 'required'])}}
@@ -304,7 +329,7 @@
 							    @enderror
 							</div>		
 						</div>
-				    </div>
+				    </div> --}}
 				     <div id="guarantor_details" class="container tab-pane fade" >
 				     	<div class="row">
 							<div class="col-md-6 form-group">
@@ -363,7 +388,7 @@
 							</div>
 							<div class="col-md-6 form-group">
 								{{Form::label('guarantor_signature','Guarantor Signature')}}
-								{{Form::file('gurantor_signature',['class'=>'form-control','accept'=>'image/*'])}}
+								{{Form::file('guarantor_signature',['class'=>'form-control','accept'=>'image/*'])}}
 								@error('guarantor_signature')
 							        <span class="text-danger" role="alert">
 							            <strong>{{ $message }}</strong>
@@ -437,7 +462,7 @@
 							</div>
 							<div class="col-md-6 form-group">
 								{{Form::label('guarantor_signature1','Guarantor Signature')}}
-								{{Form::file('gurantor_signature1',['class'=>'form-control','accept'=>'image/*'])}}
+								{{Form::file('guarantor_signature1',['class'=>'form-control','accept'=>'image/*'])}}
 								@error('guarantor_signature1')
 							        <span class="text-danger" role="alert">
 							            <strong>{{ $message }}</strong>
@@ -458,7 +483,7 @@
 				     				</thead>
 				     				<tbody id="tbody">
 				     					<tr id="row0">
-				     						<td>
+				     					{{-- 	<td>
 				     							<input type="text" name="doc_name[]" value="" class="form-control">
 				     						</td>
 				     						<td>
@@ -495,7 +520,7 @@
 				     						</td>
 				     						<td>
 				     							<input type="file" name="doc_file[]" class="form-control">
-				     						</td>
+				     						</td> --}}
 				     					</tr>
 				     				</tbody>
 				     			</table>
@@ -506,6 +531,7 @@
 			</div>
 			<div class="card-footer">
 				{{Form::submit('Save & Continue')}}
+
 			</div>
 			{{Form::close()}}
 		</div>
@@ -537,6 +563,7 @@
 				format:'yyyy-mm-dd'
 			});
 		});
+	
    	});
 </script>
 @endsection

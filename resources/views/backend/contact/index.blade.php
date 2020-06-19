@@ -11,7 +11,7 @@
 						<tr>
 							<th>#</th>
 							<th>Name</th>
-							<th>Email</th>
+							<th>Mobile</th>
 							<th>Subject</th>
 							<th>Message</th>
 							<th>Action</th>
@@ -23,11 +23,12 @@
 						<tr>
 							<th>{{$count++}}</th>
 							<th>{{$contact->name}}</th>
-							<th>{{$contact->email}}</th>
+							<th>{{$contact->mobile}}</th>
 							<th>{{$contact->subject}}</th>
 							<th>{{$contact->message}}</th>
 							<th>
 								<a href="{{route('contact.delete',$contact->id)}}" class="btn"><i class="fa fa-trash text-danger"></i></a>
+								
 							</th>
 						</tr>
 					@endforeach

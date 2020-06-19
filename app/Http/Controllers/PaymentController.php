@@ -9,6 +9,7 @@ use App\Models\ClientLoan;
 use App\Models\LoanMast;
 use App\Models\Instalment;
 use PaytmWallet;
+use App\SendCode;
 use Auth;
 class PaymentController extends Controller
 {
@@ -32,6 +33,7 @@ class PaymentController extends Controller
 	    $input['order_id'] = $request->mobile.rand(1,100);
 	    $input['amount'] = $request->amount;
       $input['payment_mode'] = '2';
+      // $input['instalment_amount'] = '2';
 
 	    $instalment = Instalment::find($request->instalment_id);
 	    // return $instalment;
@@ -66,17 +68,18 @@ class PaymentController extends Controller
         $response = $transaction->response();
         $order_id = $transaction->getOrderId();
         $amount = $transaction->getAmount();
+        $pay = Payment::where('order_id',$order_id)->first();
 
         if($transaction->isSuccessful()){
           Payment::where('order_id',$order_id)->update(['status'=>2,'payment_mode' => '2', 'transaction_id'=>$transaction->getTransactionId()]);
-          $pay = Payment::where('order_id',$order_id)->first();
           
           Instalment::where('id',$pay->instalment_id)->update(['status' => '2','pay' => '2','amount_due' => $amount]);
           return redirect()->route('loan.show',$pay->loan_id)->with('success','Instalment Paid Successfully');
 
         }else if($transaction->isFailed()){
           Payment::where('order_id',$order_id)->update(['status'=>1, 'transaction_id'=>$transaction->getTransactionId()]);
-          dd('Payment Failed.');
+
+           return redirect()->route('loan.show',$pay->loan_id)->with('warning','Payment Failed');
 
         }
 
@@ -106,15 +109,23 @@ class PaymentController extends Controller
       $input['order_id'] = $request->mobile.rand(1,100);
       $input['amount'] = $request->amount;
       $input['payment_mode'] = $request->payment_mode;
+      $input['instalment_amount'] = $request->instalment_amount;
 
       $instalment = Instalment::find($request->instalment_id);
-          
+          // return $instalment;
       $input['instalment_id'] = $instalment->id;     
       $input['loan_id'] = $instalment->loan_id;    
       $input['status'] = '2';    
 
       Payment::create($input);
-      $instalment->update(['status' => '2','pay' => '1','amount_due' => $input['amount']]);
-        return back()->with('success','Instalment Paid');
+      $instalment->update(['status' => '2','pay' => '1','amount_due' => $input['instalment_amount']]);
+      // return $request->all();
+
+      $send = [
+          'message' => 'Thank you for submit the instalment payment on your vehicle loan. Your '.date('Y-m-d',strtotime($instalment->instalment_date)).' payment of clears the remaining balance.',
+          'mobile' => $request->mobile,
+      ];
+      SendCode::sendCode($send);
+      return back()->with('success','Instalment Paid and Message Sent to client.');
     }
 }

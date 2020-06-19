@@ -7,7 +7,7 @@
 			<div class="card-header">
 				Loan Details
 				@role('admin|Employee')
-				<a href="{{route('client.show',$clientLoan->id)}}" class="btn btn-sm btn-primary pull-right ml-2"><i class="fa fa-angle-left"></i> Back</a>	
+				<a href="{{route('client.show',$clientLoan->client_id)}}" class="btn btn-sm btn-primary pull-right ml-2"><i class="fa fa-angle-left"></i> Back</a>	
 				<a href="" class="btn btn-sm btn-primary pull-right ml-2">SEIZING</a>
 				<a href="{{route('loan.noc',$clientLoan->id)}}" class="btn btn-sm btn-primary pull-right ml-2">NOC Report</a>
 				@endrole
@@ -20,11 +20,14 @@
 					<div class="col-md-6 form-group">
 						<h6>Financer Name :- {{$clientLoan->financer_name}}</h6>
 						<h6>Hirer Name :- {{$clientLoan->hirer_name}}</h6>
+						<h6>Registration Date :- {{date('d-m-Y',strtotime($clientLoan->registration_date))}}</h6>
+						<h6>Instalment Start Date :- {{date('d-m-Y',strtotime($clientLoan->instalment_date))}}</h6>
 						<h6>Make :- {{$clientLoan->make}}</h6>
 					</div>
 					<div class="col-md-6 form-group">
 						
 						<h6>Finance Amount :- {{$clientLoan->finance_amount}}</h6>
+						<h6>Total Amount :- {{$clientLoan->total_amount}}</h6>
 						<h6>No of Instalments :- {{$clientLoan->loan_mast->no_of_instalment}}</h6>
 						<h6>Status :- {{Arr::get(LOANSTATUS,$clientLoan->status)}}</h6>
 						
@@ -63,12 +66,11 @@
 								</tr>
 							</thead>
 							<tbody>
-								@php $count = 1; @endphp
 								@foreach($clientLoan->instalments as $instalment)
 									<tr>
-										<td>{{$count++}}</td>
+										<td>{{$instalment->instalment_no}}</td>
 										<td>{{$instalment->amount}}</td>
-										<td>{{$instalment->amount_due != null ? $instalment->amount_due : '0' }}</td>
+										<td>{{$instalment->payment !=null ? $instalment->payment->instalment_amount : '0' }}</td>
 										<td>{{date('d-m-Y',strtotime($instalment->instalment_date))}}</td>
 										<td>{{$instalment->late_days}}</td>
 										<td>{{Arr::get(PAYSTATUS,$instalment->pay)}}</td>
@@ -78,7 +80,7 @@
 												{{-- @if($instalment->after == 0) --}}
 													<a href="{{route('payment.show',$instalment->id)}}" class="btn btn-sm btn-success">Paytm</a>
 												@role('admin')
-													<button type="button" class="btn btn-primary" id="modelId" data-id="{{$instalment->id}}">Paid</button>
+													<button type="button" class="btn btn-primary modelId" id="modelId" data-id="{{$instalment->id}}">Paid</button>
 												@endrole
 
 												{{-- @else
@@ -125,11 +127,16 @@
 			</div>
 			<div class="col-md-12 form-group">
 				{{Form::label('address','Address',['class'=>'required'])}}
-				{{Form::input('text','address','',['class'=>'form-control','placeholder'=>'Enter Address'])}}
+				{{Form::input('text','address','',['class'=>'form-control','placeholder'=>'Enter Address','required'=>'required'])}}
 			</div>
+			<div class="col-md-12 form-group">
+        		{{Form::label('instalment_amount',"Instalment Amount")}} <span class="text-muted">(premium amount + late amount) </span>
+        		{{Form::input('text','instalment_amount','',['class' => 'form-control','readonly'=>'readonly'])}}
+    		</div>
+		
         	<div class="col-md-12 form-group">
-        		{{Form::label('amount',"Total Amount")}} <span class="text-muted">(premium amount + late amount) </span>
-        		{{Form::input('text','amount','',['class' => 'form-control','readonly'=>'readonly'])}}
+        		{{Form::label('amount',"Total Pay Amount")}}
+        		{{Form::input('text','amount','',['class' => 'form-control'])}}
         	</div>
         	<div class="col-md-12 form-group">
         		{{Form::label('payment_mode',"Payment Mode")}}
@@ -140,7 +147,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        {{Form::hidden('instalment_id',$instalment->id)}}
+        {{Form::hidden('instalment_id')}}
+
         {{Form::submit('Pay' , ['class' => 'btn btn-sm btn-success'])}}
       </div>
       {{Form::close()}}
@@ -152,8 +160,11 @@
 		@if($message = Session::get('success'))
 			$.notify("{{$message}}",'success')
 		@endif
+		@if($message = Session::get('warning'))
+			$.notify("{{$message}}")
+		@endif
 
-		$('#modelId').on('click',function(e){
+		$('.modelId').on('click',function(e){
 			e.preventDefault();
 			var id = $(this).attr('data-id');
 			$.ajax({
@@ -162,10 +173,12 @@
 				data:{id:id},
 				success:function(res){
 					console.log(res)
+					var amount = parseInt(res.amount)+parseInt(res.late_amount);
 					$('input[name="name"]').val(res.client.name);
 					$('input[name="mobile"]').val(res.client.mobile);
 					$('input[name="address"]').val(res.client.address);
-					$('input[name="amount"]').val(parseInt(res.amount)+parseInt(res.late_amount));
+					$('input[name="amount"]').val(amount);
+					$('input[name="instalment_amount"]').val(amount);
 					$('input[name="instalment_id"]').val(res.id);
 					$('#exampleModal').modal('show');
 				}

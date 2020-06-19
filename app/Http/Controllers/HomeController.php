@@ -16,6 +16,7 @@ use App\Models\ClientLoan;
 use App\Models\Message;
 use App\SendCode;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 class HomeController extends Controller
 {
     /**
@@ -36,11 +37,12 @@ class HomeController extends Controller
     public function index()
     {
         $myloans = 0;
+        $myInstalment = [];
         if(Auth::user()->hasRole('client')){
-            $client = Client::where('user_id',Auth::user()->id)->select('id');
-            print_r($client);
-           die; 
-            $myloans = ClientLoan::where('client',$client)->count();
+            $client = Client::select('id','user_id')->where('user_id',Auth::user()->id)->first();
+           
+            $myloans = ClientLoan::where('client_id',$client->id)->count();
+            $myInstalment = Instalment::with('client')->whereDate('instalment_date',date('Y-m-d'))->where('client_id',$client->id)->paginate('5');
         }
         $clients = Client::count();
         $contacts = Contact::count();
@@ -54,7 +56,7 @@ class HomeController extends Controller
         $payments = Payment::sum('amount');
 
 
-        return view('backend.home',compact('payments','clients','loans','all_loans','instalments','employees','today_payments','month_payments','contacts','myloans'));
+        return view('backend.home',compact('payments','clients','loans','all_loans','instalments','employees','today_payments','month_payments','contacts','myloans','myInstalment'));
         
     }
 
@@ -172,5 +174,32 @@ class HomeController extends Controller
     //     $date =Carbon::now();
 
     // }
+
+     public function password_change(){
+    return view('auth.passwords.change_password');
+  }
+  public function changePassword(Request $request)
+  {
+    // return $request->all();
+    $request->validate([
+      'new_password' => 'min:8|required_with:confirm_password|same:confirm_password',
+      'confirm_password' => 'min:8'
+    ]);
+
+    $user = User::find(auth()->user()->id);
+
+    if(Hash::check($request->old_password, $user->password)) {
+       $user->password = Hash::make($request->new_password);
+       $user->save();
+
+      $status = 'Password Updated!';
+      return redirect()->back()->with('success',$status);
+    } else {
+      $class = 'alert alert-danger';
+      $status = 'Old password incorrect!';
+      return redirect()->back()->with('warning',$status);
+    }
+
+  }
 
 }

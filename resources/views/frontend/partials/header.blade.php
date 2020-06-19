@@ -27,6 +27,7 @@
  <link href="{{asset('css/style.css')}}" rel="stylesheet">
  {{-- <link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet"> --}}
  	<title>@yield('title')</title>
+ 
 </head>
 <body>
 
@@ -34,16 +35,20 @@
   <header id="header" class="fixed-top " style="background-color: rgba(40, 58, 90, 0.9)">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo mr-auto"><a href="index.html">{{APPNAME}}</a></h1>
+      <h1 class="logo mr-auto"><a href="{{url('/')}}">
+        <img src="{{asset('images/logo4.png')}}" alt="" class="img-fluid" style="width: 235px !important;">
+      {{-- {{APPNAME}} --}}
+
+    </a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
-       {{-- <a href="index.html" class="logo mr-auto"><img src="{{asset('images/logo.png')}}" alt="" class="img-fluid"></a> --}}
+       {{-- <a href="index.html" class="logo mr-auto"></a> --}}
 
       <nav class="nav-menu d-none d-lg-block">
         <ul>
           <li class="active"><a href="{{url('/')}}">Home</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#services">Services</a></li>
-          <li><a href="#portfolio">Our Clients</a></li>
+          {{-- <li><a href="#portfolio">Our Clients</a></li> --}}
           {{-- <li><a href="#team">Team</a></li> --}}
          {{--  <li class="drop-down"><a href="">Drop Down</a>
             <ul>

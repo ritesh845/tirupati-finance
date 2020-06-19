@@ -97,12 +97,40 @@
 				</div>
 				<hr>
 				<div class="row">
+						<div class="col-md-6 form-group">
+						{{Form::label('registration_date','Registration Date',['class' => 'required'])}}
+						{{Form::input('text','registration_date',old('registration_date') ?? $clientLoan->registration_date,['class' => 'form-control datepicker1','readonly' =>'readonly'])}}
+						@error('registration_date')
+					        <span class="text-danger" role="alert">
+					            <strong>{{ $message }}</strong>
+					        </span>
+					    @enderror
+					</div>
+					<div class="col-md-6 form-group">
+						{{Form::label('instalment_start_date','Instalment Start Date ',['class' => 'required'])}}
+						{{Form::input('text','instalment_start_date',old('instalment_start_date') ?? $clientLoan->instalment_date,['class' => 'form-control datepicker1','readonly' =>'readonly'])}}
+						@error('instalment_start_date')
+					        <span class="text-danger" role="alert">
+					            <strong>{{ $message }}</strong>
+					        </span>
+					    @enderror
+					</div>
 					<div class="col-md-6 form-group">
 						{{Form::label('finance_amount','Finance Amount',['class' => 'required'])}}
 						<span class="text-muted">(You can't change this)</span>
 						{{Form::select('finance_amount',array(),'',['class' => 'form-control','disabled' => 'disabled'])}}
 						{{Form::hidden('finance_amount',$clientLoan->loan_mast_id)}}
 						@error('finance_amount')
+					        <span class="text-danger" role="alert">
+					            <strong>{{ $message }}</strong>
+					        </span>
+					    @enderror
+					</div>
+					<div class="col-md-6">
+						{{Form::label('total_amount','Total Amount',['class' => 'required'])}}
+						{{Form::input('text','total_amount',old('total_amount') ?? $clientLoan->total_amount,['class'=>'form-control','placeholder'=>'0','readonly' => 'readonly'])}}
+
+						@error('total_amount')
 					        <span class="text-danger" role="alert">
 					            <strong>{{ $message }}</strong>
 					        </span>
@@ -179,7 +207,11 @@
 </div>
 <script >
 	$(document).ready(function() {
-
+		$(function() {
+			$('.datepicker1').datepicker({
+				format:'yyyy-mm-dd'
+			});
+		});
 		@if($message = Session::get('success'))
 			$.notify("{{$message}}",'success');
 		@endif
@@ -237,10 +269,11 @@
 		}
 
 
-		function instalment_list(id){
+		function instalment_list(id,instalment_date=""){
 			$.ajax({
-				type: 'get',
-				url: '/finance/loan_fetch/'+id,
+				type: 'post',
+				url: '/finance/loan_fetch/',
+				data:{id:id,instalment_date:instalment_date},
 				success:function(res){
 
 					// console.log(res)		

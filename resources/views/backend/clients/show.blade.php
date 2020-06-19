@@ -127,10 +127,10 @@
 									<th>Financer Name</th>
 									<th>Vehicle Type</th>
 									<th>Vehicle Name</th>
-									<th>Vehicle Model</th>
 									<th>Vehicle Number</th>
 									<th>No. of Instalment</th>
 									<th>Finance Amount</th>
+									<th>Total Amount</th>
 									<th>Status</th>
 									<th>Action</th>
 								</tr>
@@ -143,14 +143,15 @@
 									<td>{{$clientLoan->financer_name}}</td>
 									<td>{{Arr::get(VEHICLETYPE,$clientLoan->vehicle_type)}}</td>
 									<td>{{$clientLoan->vehicle_name}}</td>
-									<td>{{$clientLoan->vehicle_model}}</td>
 									<td>{{$clientLoan->vehicle_number !='' ? $clientLoan->vehicle_number : '-'}}</td>
 									<td>{{$clientLoan->loan_mast->no_of_instalment}}</td>
 									<td>{{$clientLoan->finance_amount}}</td>
+									<td>{{$clientLoan->total_amount}}</td>
 									<td>{{Arr::get(LOANSTATUS,$clientLoan->status)}}</td>
 									<td>
 										<a href="{{route('loan.edit',$clientLoan->id)}}" ><i class="btn fa fa-edit text-success"></i></a>
 										<a href="{{route('loan.show',$clientLoan->id)}}" ><i class="btn fa fa-eye text-primary"></i></a>
+										<a href="{{route('loan.delete',$clientLoan->id)}}" ><i class="btn text-danger fa fa-trash" onclick="return confirm('Are you sure you want to delete this client  laon overall data?');"></i></a>
 									</td>
 								</tr>
 								@endforeach

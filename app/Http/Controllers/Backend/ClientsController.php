@@ -23,7 +23,7 @@ class ClientsController extends Controller
     	return view('backend.clients.index',compact('clients'));
     }
     public function create(){
-    	return view('backend.clients._create');
+    	return view('backend.clients.create');
     }
     public function store(Request $request){
         $data = $this->validation($request);
@@ -91,7 +91,23 @@ class ClientsController extends Controller
 
     }
     public function delete($id){
-            	
+        $client = Client::find($id);
+        $loans =  $client->loans()->get();
+
+        foreach ($loans as $loan) {
+            foreach($loan->instalments as $instalment){
+                if($instalment->payment !=null){
+                     $instalment->payment->delete();
+                }
+                $instalment->delete();
+            }
+            $loan->delete();
+        }
+        User::find($client->user_id)->delete();
+        
+        $client->delete();
+        return back()->with('success','Client deleted successfully and client loan and instalment also deleted');
+
     }
 
     public function validation($request,$id=null,$user_id=null){
@@ -106,9 +122,9 @@ class ClientsController extends Controller
             'age'               => 'nullable|min:2|max:2',
             'cast_category'     => 'nullable',
             'pan_card'          => 'nullable|max:10|min:10',
-            'pan_card'          => 'nullable|max:10|min:10',
-            'address'           => 'nullable',
-            'zip_code'          => 'nullable|min:6|max:7',
+            'address'           => 'required',
+            'zip_code'          => 'required|min:6|max:7',
+            'registration_date' => 'required|date_format:Y-m-d',
             'bussiness'         => 'nullable|min:3|max:191',
             'bussiness_year'    => 'nullable',
             'office_name'       => 'nullable',
@@ -153,7 +169,7 @@ class ClientsController extends Controller
             'mobile' => $request->mobile 
         ]; 
 
-        // SendCode::sendCode($sendData);       
+        SendCode::sendCode($sendData);       
        
         $user =  User::create($data);
         $user->assignRole('client');
@@ -180,7 +196,7 @@ class ClientsController extends Controller
     }
     public function loanSubmit(Request $request){
         // return $request->all();
-        $object =$this->loan_validation($request);
+        $object = $this->loan_validation($request);
         $loan = $object['loan'];        
         $data = $object['data'];        
 
@@ -190,18 +206,18 @@ class ClientsController extends Controller
             $i = 1;
             foreach ($request->premium as $key => $premium) {
                 $inst = [
-                    'client_id'     => $request->client_id,
-                    'loan_id'       => $clientLoan->id,
-                    'loan_mast_id'  => $loan->id,
+                    'client_id'      => $request->client_id,
+                    'loan_id'        => $clientLoan->id,
+                    'loan_mast_id'   => $loan->id,
                     'instalment_date'=> $request->instalment_date[$key],
-                    'amount'         =>  $premium,
+                    'instalment_no'  => $request->instalment_no[$key],
+                    'amount'         => $premium,
                     'status'         => $request->status, 
-                    // 'instalment_id'  => 'tf_'.$clientLoan->id.'_'.$i++, 
                 ];
                 if($key != 0){
                     $inst['after'] = '1'; 
                 }
-                Instalment::find()->create($inst);
+               Instalment::create($inst);
             }
         }
 
@@ -217,19 +233,19 @@ class ClientsController extends Controller
         $object =$this->loan_validation($request);
         $loan = $object['loan'];        
         $data = $object['data']; 
-        $clientLoan =   ClientLoan::find($id)->update($data); 
+        $clientLoan = ClientLoan::find($id);
+        $clientLoan->update($data); 
 
         if(count($request->premium) !=0){
             $i = 1;
             foreach ($request->premium as $key => $premium) {
                 $inst = [
-                    'client_id'     => $request->client_id,
-                    'loan_id'       => $clientLoan,
-                    'loan_mast_id'  => $loan->id,
+                    'client_id'      => $request->client_id,
+                    'loan_id'        => $clientLoan->id,
+                    'loan_mast_id'   => $loan->id,
                     'instalment_date'=> $request->instalment_date[$key],
-                    'amount'         =>  $premium,
+                    'amount'         => $premium,
                     'status'         => $request->status, 
-                    // 'instalment_id'  => 'tf_'.$clientLoan->id.'_'.$i++, 
                 ];
                 if($key != 0){
                     $inst['after'] = '1'; 
@@ -244,7 +260,19 @@ class ClientsController extends Controller
     }
     public function loanShow($id){
         $clientLoan = ClientLoan::with('instalments','loan_mast')->find($id);
+        // return $clientLoan;
         return view('backend.clients.loan.show',compact('clientLoan'));
+    }
+    public function loanDelete($id){
+        $loan = ClientLoan::find($id);
+        foreach ($loan->instalments as $instalment) {
+            if($instalment->payment !=null){
+                $instalment->payment->delete();
+            }
+            $instalment->delete();
+        }
+        $loan->delete();
+        return back()->with('success','Client loan and instalment also deleted');
     }
     public function client_loan_fetch($id){
 
@@ -254,18 +282,22 @@ class ClientsController extends Controller
 
     }
     public function loan_validation($request){
+        // return $request->all();
          $request->validate([
-            'financer_name' => 'required|min:3|max:191',
-            'make' => 'nullable|min:3|max:191',
-            'hirer_name' => 'required|min:3|max:191',
-            'vehicle_type' => 'required|not_in:""',
-            'vehicle_name' => 'required|min:3|max:191',
-            'vehicle_model' => 'required|min:3|max:191',
-            'vehicle_no' => 'nullable|min:3|max:191',
-            'vehicle_chassis_no' => 'required|min:3|max:191',
+            'financer_name'     => 'required|min:3|max:191',
+            'make'              => 'nullable|min:3|max:191',
+            'hirer_name'        => 'required|min:3|max:191',
+            'vehicle_type'      => 'required|not_in:""',
+            'vehicle_name'      => 'required|min:3|max:191',
+            'vehicle_model'     => 'required|min:3|max:191',
+            'vehicle_no'        => 'nullable|min:3|max:191',
+            'vehicle_chassis_no'=> 'required|min:3|max:191',
             'vehicle_engine_no' => 'required|min:3|max:191',
-            'finance_amount' => 'required|not_in:""',
-            'status'        => 'required|not_in:""',
+            'finance_amount'    => 'required|not_in:""',
+            'status'            => 'required|not_in:""',
+            'registration_date' => 'required|date_format:Y-m-d',
+            'instalment_start_date'=> 'required|date_format:Y-m-d',
+            'total_amount'      => 'required'
         ]);
 
         $loan = LoanMast::find($request->finance_amount);
@@ -283,16 +315,16 @@ class ClientsController extends Controller
             'vehicle_no'        => $request->vehicle_no,
             'vehicle_chassis_no'=> $request->vehicle_chassis_no,
             'vehicle_engine_no' => $request->vehicle_engine_no,
-            'loan_created_at'   => date('Y-m-d'),
-            'status'            => $request->status, 
+            'registration_date' => $request->registration_date,
+            'instalment_date'   => $request->instalment_start_date,
+            'status'            => $request->status,
+            'total_amount'      => $request->total_amount 
         ];
 
         return $object= [
             'data' => $data,
             'loan' => $loan,
         ];
-
-
 
     }
 }

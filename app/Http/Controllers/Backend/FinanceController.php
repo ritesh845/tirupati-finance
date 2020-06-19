@@ -23,9 +23,9 @@ class FinanceController extends Controller
     	$object = $this->validation($request);
     	$data = $object['data'];
     	$premiums = $object['premiums']; 
-    	$instalment_day = $object['instalment_day']; 
+    	// $instalment_day = $object['instalment_day']; 
     	$loan = LoanMast::create($data);
-    	$this->instalment_create($premiums,$instalment_day,$loan);
+    	$this->instalment_create($premiums,$loan);
     	return "Success";
 
     }
@@ -40,15 +40,17 @@ class FinanceController extends Controller
     	// return $object;
     	$data = $object['data'];
     	$premiums = $object['premiums']; 
-    	$instalment_day = $object['instalment_day']; 
+    	// $instalment_day = $object['instalment_day']; 
     	$loan = LoanMast::find($id);
     	$loan->update($data);
     	InstalmentMast::where('loan_mast_id',$id)->delete();
-    	$this->instalment_create($premiums,$instalment_day,$loan);
+    	$this->instalment_create($premiums,$loan);
     	return "Success";
     }
     public function show($id){
-    	return view('backend.finance.show');
+        $loan = LoanMast::with('instalments')->find($id);
+        // return $loans;
+    	return view('backend.finance.show',compact('loan'));
     }
     public function delete($id){
 
@@ -56,28 +58,26 @@ class FinanceController extends Controller
     public function validation($request){
     	$data = [
     		'finance_amount' => $request->finance_amount,
-    		'no_of_instalment' => $request->no_of_instalment, 
+    		'no_of_instalment' => $request->no_of_instalment,
+            'total_amount' => $request->total_amount, 
     		'interest' => $request->interest, 
     		'vehicle_type' => $request->vehicle_type 
     	];
 
     	$premiums = $request->premium;
-    	$instalment_day = $request->instalment_day;
+    	// $instalment_day = $request->instalment_day;
     	$object = [
     		'data' => $data,
     		'premiums' => $premiums,
-    		'instalment_day' => $instalment_day,
     	];
     	return $object;
     }
-    public function instalment_create($premiums, $instalment_day,$loan){
+    public function instalment_create($premiums,$loan){
     	$i =1 ;
     	foreach ($premiums as $key => $premium) {
     		$data = [
     			'loan_mast_id' => $loan->id,
     			'premium'	=> $premium,
-    			'instalment_day' => $instalment_day[$key],
-    			'instalment_id' => 'tf_'.$loan->id.'_'.$i++,
     		];	
     		InstalmentMast::create($data);
     	}
@@ -88,8 +88,10 @@ class FinanceController extends Controller
     	$loans = LoanMast::where('vehicle_type',$vehicle_type)->where('status','1')->get();
     	return $loans;
     }
-    public function loan_fetch($id){
-    	$loan = LoanMast::with('instalments')->where('id',$id)->first();
-    	return view('backend.clients.loan.instalment_list',compact('loan'));
+    public function loan_fetch(Request $request){
+    	$loan = LoanMast::with('instalments')->where('id',$request->id)->first();
+        $instalment_start_date = $request->instalment_start_date;
+        
+    	return view('backend.clients.loan.instalment_list',compact('loan','instalment_start_date'));
     }
 }

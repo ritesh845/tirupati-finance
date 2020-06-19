@@ -13,9 +13,10 @@ class HomeController extends Controller
     }
 
     public function contact(Request $request){
+      // return $request->all();
        $data =  $request->validate([
             'name'    => 'required|max:150|min:3',
-            'email'   => 'required|email',
+            'mobile'   => 'required',
             'subject' => 'required',
             'message' => 'required'
         ]);

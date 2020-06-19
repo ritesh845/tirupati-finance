@@ -5,6 +5,13 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header">
+				<div class="row">
+					<div class="col-md-12">
+						Client Create
+						<a href="{{route('client.index')}}" class="btn btn-sm btn-primary pull-right ml-2"><i class="fa fa-angle-left"></i> Back</a>
+					</div>
+				</div>
+				<hr>
 				<ul class="nav nav-tabs">
 				    <li class="nav-item">
 				      <a class="nav-link active" data-toggle="tab" href="#basic_details">Basic Details</a>
@@ -130,6 +137,15 @@
 							        </span>
 							    @enderror
 							</div>
+							<div class="col-md-6 form-group">
+								{{Form::label('registration_date','Registration Date',['class' => 'required'])}}
+								{{Form::input('text','registration_date',old('registration_date') ?? $client->registration_date,['class'=>'form-control datepicker','placeholder' => '','readonly' => 'readonly'])}}
+								@error('registration_date')
+							        <span class="text-danger" role="alert">
+							            <strong>{{ $message }}</strong>
+							        </span>
+							    @enderror
+							</div>	
 							<div class="col-md-6 form-group">
 								{{Form::label('bussiness','Bussiness Name')}}
 								{{Form::input('text','bussiness',old('bussiness') ?? $client->bussiness,['class'=>'form-control','placeholder'=>'Bussiness Name'])}}
@@ -386,7 +402,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-12">
-								{{Form::input('checkbox','guarantor_another',old('guarantor_another'),)}}
+								{{Form::input('checkbox','guarantor_another',old('guarantor_another'),[($client->guarantor_another  ==1 ? 'checked' : '') ])}}
 								{{Form::label('Another Guarantor Details')}}
 							</div>
 						</div>
@@ -550,7 +566,8 @@
 
 	    $(function() {
 			$('.datepicker').datepicker({
-				format:'yyyy-mm-dd'
+				format:'yyyy-mm-dd',
+				
 			});
 		});
 		@if($message = Session::get('success'))

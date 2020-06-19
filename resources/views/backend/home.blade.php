@@ -150,6 +150,41 @@
                 </div>
               </div>
             </div>
+             <div class="col-md-12 col-sm-12 ">
+            <div class="card ">
+              <div class="card-header">
+                Today Instalment
+
+              </div>
+                <div class="card-body" >
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Client Name</th>
+                                <th>Mobile Number</th>
+                                <th>Instalment Amount</th>
+                                <th>Instalment Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          @php $count = 1; @endphp
+                              @foreach($myInstalment as $instalment)
+                                <tr>
+                                    <td>{{$count++}}</td>
+                                    <td>{{$instalment->client->name}}</td>
+                                    <td>{{$instalment->client->mobile}}</td>
+                                    <td>{{$instalment->amount}}</td>
+                                    <td>{{date('d-m-Y',strtotime($instalment->instalment_date))}}</td>
+                                    
+                                </tr>
+                              @endforeach
+                        </tbody>
+                    </table>
+                    {{$instalments->links()}}
+                </div>
+            </div>
+          </div>
           @endrole
           {{--   <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">

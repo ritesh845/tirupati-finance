@@ -30,9 +30,10 @@
 									<tr>
 										<th>#</th>
 										<th>Name</th>
+										<th>Father Name</th>
 										<th>Mobile</th>
 										<th>Aadhar Card</th>
-										<th>Agreement Date</th>
+										<th>Registration Date</th>
 										<th>Action</th>
 									</tr>
 								</thead>
@@ -41,15 +42,20 @@
 										<tr>
 											<td>{{$client->id}}</td>
 											<td>{{$client->name}}</td>
+											<td>{{$client->father_name}}</td>
 											<td>{{$client->mobile}}</td>
 											<td>{{$client->aadhar_card}}</td>
-											<td>{{$client->agreement_date}}</td>
+											<td>{{date('d-m-Y',strtotime($client->registration_date))}}</td>
 											<td>
 												<a href="{{route('client.edit',$client->id)}}"><i class="btn text-success fa fa-edit"></i></a>
 												<a href="{{route('client.show',$client->id)}}">
 													<i class="btn text-primary fa fa-eye"></i>
 												</a>
+												<a href="{{route('client.delete',$client->id)}}">
+													<i class="btn text-danger fa fa-trash" onclick="return confirm('Are you sure you want to delete this client overall data?');"></i>
+												</a>
 											</td>
+
 										</tr>
 									@endforeach
 								</tbody>
@@ -62,6 +68,9 @@
 	</div>
 <script>
 	$(document).ready(function(){
+		@if($message = Session::get('success'))
+			$.notify("{{$message}}",'success')
+		@endif
 		$(function(){
 			$('.datatable').DataTable();
 		})

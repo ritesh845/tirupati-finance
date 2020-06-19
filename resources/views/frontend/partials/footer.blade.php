@@ -25,19 +25,24 @@
             <h3>Tirupati Finance</h3>
             <p>
                <br><br>
-              <strong>Phone:</strong> 1234567890<br>
-              <strong>Email:</strong> {{-- <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b7ded9d1d8f7d2cfd6dac7dbd299d4d8da">[email&#160;protected]</a><br> --}}
+               <strong>Address:</strong>
+               {{APPADDRESS}}
+               <br>
+              <strong>Phone:</strong> {{APPMOBILE}}<br>
+              <strong>Email:</strong> 
+              {{APP_EMAIL}}
+              {{-- <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b7ded9d1d8f7d2cfd6dac7dbd299d4d8da">[email&#160;protected]</a><br> --}}
             </p>
           </div>
 
           <div class="col-lg-4 col-md-6 footer-links">
             <h4>Useful Links</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+              <li><i class="fa fa-chevron-right"></i> <a href="#">Home</a></li>
+              <li><i class="fa fa-chevron-right"></i> <a href="#">About us</a></li>
+              <li><i class="fa fa-chevron-right"></i> <a href="#">Services</a></li>
+              <li><i class="fa fa-chevron-right"></i> <a href="#">Terms of service</a></li>
+              <li><i class="fa fa-chevron-right"></i> <a href="#">Privacy policy</a></li>
             </ul>
           </div>
 
@@ -54,13 +59,13 @@
 
           <div class="col-lg-4 col-md-6 footer-links">
             <h4>Our Social Networks</h4>
-            <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
+            {{-- <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p> --}}
             <div class="social-links mt-3">
-              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-              <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-              <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+              <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+              <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+              <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+              <a href="#" class="google-plus"><i class="fa fa-skype"></i></a>
+              {{-- <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a> --}}
             </div>
           </div>
 
@@ -105,7 +110,9 @@
             }
         });
   </script>
+{{-- 
+	<script>if( window.self == window.top ) { (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', 'UA-55234356-4', 'auto'); ga('send', 'pageview'); } </script> --}}
 
-	<script>if( window.self == window.top ) { (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', 'UA-55234356-4', 'auto'); ga('send', 'pageview'); } </script>
+
 </body>
 </html>

@@ -3,7 +3,7 @@
 
         <div class="section-title">
           <h2>Contact</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+          <p>If you want to Two wheeler and Four wheeler loan please contact us. Our team member contact you and provide loan details</p>
         </div>
 
         <div class="row">
@@ -13,22 +13,23 @@
               <div class="address">
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
                 <h4>Location:</h4>
-                <p>Jaora</p>
+                <p>{{APPADDRESS}}</p>
               </div>
 
               <div class="email">
                <i class="fa fa-envelope-o" aria-hidden="true"></i>
                 <h4>Email:</h4>
-                <p>tirupatifinance@gmail.com</p>
+                <p>{{APP_EMAIL}}</p>
               </div>
 
               <div class="phone">
                 <i class="fa fa-phone" aria-hidden="true"></i>
                 <h4>Call:</h4>
-                <p>+1234567890</p>
+                <p>{{APPMOBILE}}</p>
               </div>
 
-              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>
+                {{-- <div id="map"></div> --}}
+
             </div>
 
           </div>
@@ -42,9 +43,9 @@
                   <div class="validate"></div>
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="name">Your Email</label>
-                  <input type="email" class="form-control" name="email" id="email" data-rule="email" data-msg="Please enter a valid email" />
-                  <div class="validate"></div>
+                  <label for="name">Your Mobile</label>
+                  <input type="text" class="form-control" name="mobile" id="email" data-rule="mobile" data-msg="Please enter a valid mobile" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" />
+                  <div class="validate" ></div>
                 </div>
               </div>
               <div class="form-group">

@@ -17,10 +17,12 @@
 						<tr>
 							<th>#</th>
 							<th>Finance Amount</th>
+							<th>Total Amount</th>
 							<th>No of Instalment</th>
 							{{-- <th>Interest</th> --}}
 							<th>Vehicle Type</th>
 							<th>Status</th>
+							<th>Created Date</th>
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -30,10 +32,12 @@
 						<tr>
 							<td>{{$count++}}</td>
 							<td>{{$loan->finance_amount}}</td>
+							<td>{{$loan->total_amount}}</td>
 							<td>{{$loan->no_of_instalment}}</td>
 							{{-- <td>{{$loan->interest}} paisa %</td> --}}
 							<td>{{Arr::get(VEHICLETYPE,$loan->vehicle_type)}}</td>
 							<td>{{$loan->status == '1' ? 'Active' : 'Not Active'}}</td>
+							<td>{{date('d-m-Y',strtotime($loan->created_at))}}</td>
 							<td>
 								<a href="{{route('finance.edit',$loan->id)}}" ><i class="btn fa fa-edit text-success"></i></a>
 								<a href="{{route('finance.show',$loan->id)}}" ><i class="btn fa fa-eye text-primary"></i></a>

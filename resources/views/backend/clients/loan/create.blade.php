@@ -97,9 +97,37 @@
 				<hr>
 				<div class="row">
 					<div class="col-md-6 form-group">
+						{{Form::label('registration_date','Registration Date',['class' => 'required'])}}
+						{{Form::input('text','registration_date',old('registration_date') ?? date('Y-m-d'),['class' => 'form-control datepicker1','readonly' =>'readonly'])}}
+						@error('registration_date')
+					        <span class="text-danger" role="alert">
+					            <strong>{{ $message }}</strong>
+					        </span>
+					    @enderror
+					</div>
+					<div class="col-md-6 form-group">
+						{{Form::label('instalment_start_date','Instalment Start Date ',['class' => 'required'])}}
+						{{Form::input('text','instalment_start_date',old('instalment_start_date') ?? date('Y-m-d'),['class' => 'form-control datepicker1','readonly' =>'readonly'])}}
+						@error('instalment_start_date')
+					        <span class="text-danger" role="alert">
+					            <strong>{{ $message }}</strong>
+					        </span>
+					    @enderror
+					</div>
+					<div class="col-md-6 form-group">
 						{{Form::label('finance_amount','Finance Amount',['class' => 'required'])}}
 						{{Form::select('finance_amount',array(),'',['class' => 'form-control'])}}
 						@error('finance_amount')
+					        <span class="text-danger" role="alert">
+					            <strong>{{ $message }}</strong>
+					        </span>
+					    @enderror
+					</div>
+					<div class="col-md-6">
+						{{Form::label('total_amount','Total Amount',['class' => 'required'])}}
+						{{Form::input('text','total_amount',old('total_amount'),['class'=>'form-control','placeholder'=>'0','readonly' => 'readonly'])}}
+
+						@error('total_amount')
 					        <span class="text-danger" role="alert">
 					            <strong>{{ $message }}</strong>
 					        </span>
@@ -125,10 +153,10 @@
 					    @enderror
 					</div>  --}}
 					{{-- <div class="col-md-6 form-group">
-						{{Form::label('instalment_date','Instalment Date',['class' => 'required'])}} <span class="text-muted">(Loan	 Instalment Date)</span>
-						{{Form::input('text','instalment_date',old('instalment_date'),['class'=>'form-control datepicker','placeholder'=>'Instalment Date','readonly' => 'readonly'])}}
+						{{Form::label('instalment_start_date','Instalment Date',['class' => 'required'])}} <span class="text-muted">(Loan	 Instalment Date)</span>
+						{{Form::input('text','instalment_start_date',old('instalment_start_date'),['class'=>'form-control datepicker','placeholder'=>'Instalment Date','readonly' => 'readonly'])}}
 
-						@error('instalment_date')
+						@error('instalment_start_date')
 					        <span class="text-danger" role="alert">
 					            <strong>{{ $message }}</strong>
 					        </span>
@@ -192,18 +220,29 @@
 
 		var type = "{{old('vehicle_type') != '' ? old('vehicle_type') : '1' }}" ;
 		if(type !=''){
-			var old = "{{old('finance_amount')}}";
-			finance_amount_fetch(type,old);
-			if(old !=''){
-				instalment_list(old);
+			var old_finance = "{{old('finance_amount')}}";
+			var instalment_start_date1 = "{{old('instalment_start_date')}}";
+			finance_amount_fetch(type,old_finance);
+			if(old_finance !=''){
+				instalment_list(old_finance,instalment_start_date1);
 			}
 		}
 
 		$('select[name="finance_amount"]').on('change',function(e){
 			e.preventDefault();
-
+			var instalment_start_date = $('input[name="instalment_start_date"]').val();
 			var id = $(this).val();
-			instalment_list(id);
+			if(instalment_start_date !=''){
+				instalment_list(id,instalment_start_date);
+			}
+			else{
+				$.notify('First select instalment start date');
+			}
+		});
+		$(function() {
+			$('.datepicker1').datepicker({
+				format:'yyyy-mm-dd'
+			});
 		});
 		// $(document).on("focus", ".datepicker", function () {
 		//     $(".datepicker").datepicker({
@@ -216,34 +255,45 @@
 		// 	// var finance_amount = $('select[name="finance_amount"]').val();
 		// 	// var financer_name = $('financer_name')
 		// })
-		function finance_amount_fetch(type,old=""){
+		function finance_amount_fetch(type,old_finance=""){
 			$.ajax({
 				type:'get',
 				url:"/finance/fetch/"+type,
 				success:function(res){
+					// console.log(res);
 					$('select[name="finance_amount"]').empty();
 					$('select[name="finance_amount"]').append('<option value="">Select Finance Amount</option>');
 
 					$.each(res,function(i,v){
-						$('select[name="finance_amount"]').append('<option value="'+v.id+'" ' + (v.id == old ? 'selected="selected"' : '' )+ ' >'+v.finance_amount+'</option>');
+						$('select[name="finance_amount"]').append('<option value="'+v.id+'" ' + (v.id == old_finance ? 'selected="selected"' : '' )+ ' >'+v.finance_amount + ' (' + v.no_of_instalment + ' instalment)' +'</option>');
 					});
+					
 				} 
 			});
 		}
 
 
-		function instalment_list(id){
-			$.ajax({
-				type: 'get',
-				url: '/finance/loan_fetch/'+id,
-				success:function(res){
+		function instalment_list(id,instalment_start_date){
+			if(id != ''){
+				$.ajax({
+					type: 'post',
+					url: '/finance/loan_fetch/',
+					data:{id:id,instalment_start_date:instalment_start_date},
+					success:function(res){
 
-					console.log(res)		
-					$('#instalmentBody').empty().html(res);
-					// $('#tbody').html(res);
+						// console.log(res)		
+						$('#instalmentBody').empty().html(res);
+						var total = $('#amount_hidden').val();
 
-				}
-			});
+						$('input[name="total_amount"]').val(total);
+						// $('#tbody').html(res);
+
+					}
+				});
+			}else{
+				$('#instalmentBody').empty();
+			}
+		
 		}
 	});
 </script>

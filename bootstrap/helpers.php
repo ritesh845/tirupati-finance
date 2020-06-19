@@ -3,6 +3,9 @@
 use App\User;
 const APPNAME = 'Tirupati Finance';
 const GSTNO = '23BVPPB930101Z8';
+const APPADDRESS = 'Old Bus Stand, Super Market, Khachrod, Dist. Ujjain (M.P.) ';
+const APPMOBILE = '7987331942';
+const APP_EMAIL = 'tr-finance@tirupati-finance.com';
 const CAST = [
     1 => 'OBC',
     2 => 'GENERAL',

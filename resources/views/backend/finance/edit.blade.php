@@ -22,7 +22,7 @@
 					</div>
 					<div class="col-md-6 form-group">
 						{{Form::label('interest','Interest'),['class' => 'required']}}
-						{{Form::input('text','interest',old('interest') ?? '1.5',['class'=>'form-control','placeholder'=>'','readonly' => 'readonly'])}}
+						{{Form::input('text','interest',old('interest') ?? (Arr::get(INTEREST,$loan->vehicle_type)),['class'=>'form-control','placeholder'=>'','readonly' => 'readonly'])}}
 						@error('interest')
 					        <span class="text-danger" role="alert">
 					            <strong>{{ $message }}</strong>
@@ -65,7 +65,7 @@
 						 		<tr>
 						 			<th>#</th>
 						 			<th>Premium Amount</th>
-						 			<th>Instalment Day</th>
+						 			{{-- <th>Instalment Day</th> --}}
 						 		</tr>
 						 	</thead>
 						 	<tbody id="tbody">
@@ -115,7 +115,7 @@
 				@php $count =1;  @endphp
 				@foreach($loan->instalments as $instalment)
 
-					$('#tbody').append('<tr><td>{{$count++}}</td><td>{{Form::input('text','premium[]',$instalment->premium,['class'=>'form-control premium','required' => 'required'])}}</td><td>{{Form::input('text','instalment_day[]',$instalment->instalment_day,['class'=>'form-control instalment_day','required' => 'required'])}}</td></tr>');
+					$('#tbody').append('<tr><td>{{$count++}}</td><td>{{Form::input('text','premium[]',$instalment->premium,['class'=>'form-control premium','required' => 'required'])}}</td></tr>');
 
 
 				@endforeach
@@ -140,14 +140,14 @@
 			}
 		});
 
-		$(document).on('keyup','.instalment_day',function(){
-			if(!$.isNumeric($(this).val())){
-				$.notify('instalment day field is digit format');
-				$(this).css('border-color','red')
-			}else{
-				$(this).css('border-color','green')
-			}
-		});
+		// $(document).on('keyup','.instalment_day',function(){
+		// 	if(!$.isNumeric($(this).val())){
+		// 		$.notify('instalment day field is digit format');
+		// 		$(this).css('border-color','red')
+		// 	}else{
+		// 		$(this).css('border-color','green')
+		// 	}
+		// });
 		// $("#my-form").validate({
 		//   submitHandler: function(form) {
 		//     form.submit();
@@ -168,6 +168,8 @@
 			var vehicle_type = $('select[name="vehicle_type"]').val();
 			var interest = $('input[name="interest"]').val();
 			var finance_amount = $('input[name="finance_amount"]').val();
+			var total_amount = $('input[name="total_amount"]').val();
+
 			var no_of_instalment = $('input[name="no_of_instalment"]').val();
 			
 
@@ -175,23 +177,23 @@
 			    return this.value; // $(this).val()
 			}).get();
 
-			var instalment_day = $('input[name="instalment_day[]"]').map(function () {
-			    return this.value; // $(this).val()
-			}).get();
+			// var instalment_day = $('input[name="instalment_day[]"]').map(function () {
+			//     return this.value; // $(this).val()
+			// }).get();
 		
-			var total_amount = 0;
-			if(premium.length !=0 && instalment_day.length !=0 && finance_amount !=0 && vehicle_type != '' && no_of_instalment !=''  ){
+			var premium_total_amount = 0;
+			if(premium.length !=0 && finance_amount !=0 && vehicle_type != '' && no_of_instalment !='' && total_amount != 0){
 				if(premium.length == no_of_instalment){
 					if(premium_amount_digit(premium)){
-						if(instalment_day_digit(instalment_day)){
+						// if(instalment_day_digit(instalment_day)){
 							for (var i = 0; i < premium.length; i++) {
-								total_amount += premium[i] << 0;
+								premium_total_amount += premium[i] << 0;
 							}	
-							if(finance_amount == total_amount){
+							if(total_amount == premium_total_amount){
 								$.ajax({
 									type:'patch',
 									url : "{{route('finance.update',$loan->id)}}",
-									data: {finance_amount:finance_amount,interest:interest,vehicle_type:vehicle_type,no_of_instalment:no_of_instalment,premium:premium,instalment_day:instalment_day},
+									data: {total_amount:total_amount,finance_amount:finance_amount,interest:interest,vehicle_type:vehicle_type,no_of_instalment:no_of_instalment,premium:premium},
 									success:function(res){
 										if(res =='Success'){
 											$.notify('Finance Amount Successfully Updated','success');
@@ -208,11 +210,11 @@
 								});
 
 							}else{
-								$.notify('Finance Amount and Premium Amount are not same your premium total is : '+total_amount);
+								$.notify('Total Amount and Premium Amount are not same your premium total is : '+premium_total_amount);
 							}
-						}else{
-							$.notify('all instalment day field must be digit format');
-						}					
+						// }else{
+						// 	$.notify('all instalment day field must be digit format');
+						// }					
 					}else{
 						$.notify('all premium amount field must be digit format');
 					}
@@ -235,14 +237,14 @@
 			return true;
 		}
 
-		function instalment_day_digit(instalment_day){
-			for (var i = 0; i < instalment_day.length; i++) {
-				if(!$.isNumeric(instalment_day[i])){
-					return false;
-				}
-			}
-			return true;
-		}
+		// function instalment_day_digit(instalment_day){
+		// 	for (var i = 0; i < instalment_day.length; i++) {
+		// 		if(!$.isNumeric(instalment_day[i])){
+		// 			return false;
+		// 		}
+		// 	}
+		// 	return true;
+		// }
 
 
 		// function instalment_date_check(instalment_date){
