@@ -256,7 +256,7 @@
 		function finance_amount_fetch(type,old=""){
 			$.ajax({
 				type:'get',
-				url:"/finance/fetch/"+type,
+				url:"/fetch/finance/"+type,
 				success:function(res){
 					$('select[name="finance_amount"]').empty();
 					$('select[name="finance_amount"]').append('<option value="">Select Finance Amount</option>');
@@ -271,8 +271,8 @@
 
 		function instalment_list(id,instalment_date=""){
 			$.ajax({
-				type: 'post',
-				url: '/finance/loan_fetch/',
+				type: 'GET',
+				url: '/loan_fetch/',
 				data:{id:id,instalment_date:instalment_date},
 				success:function(res){
 

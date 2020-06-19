@@ -258,7 +258,7 @@
 		function finance_amount_fetch(type,old_finance=""){
 			$.ajax({
 				type:'get',
-				url:"/finance/fetch/"+type,
+				url:"/fetch/finance/"+type,
 				success:function(res){
 					// console.log(res);
 					$('select[name="finance_amount"]').empty();
@@ -276,15 +276,15 @@
 		function instalment_list(id,instalment_start_date){
 			if(id != ''){
 				$.ajax({
-					type: 'post',
-					url: '/finance/loan_fetch/',
+					type: 'GET',
+					url: '/loan_fetch/',
 					data:{id:id,instalment_start_date:instalment_start_date},
 					success:function(res){
 						console.log(res)		
-						//$('#instalmentBody').empty().html(res);
-						//var total = $('#amount_hidden').val();
+						$('#instalmentBody').empty().html(res);
+						var total = $('#amount_hidden').val();
 
-						//$('input[name="total_amount"]').val(total);
+						$('input[name="total_amount"]').val(total);
 						// $('#tbody').html(res);
 
 					}
