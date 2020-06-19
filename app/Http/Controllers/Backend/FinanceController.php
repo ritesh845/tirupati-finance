@@ -89,6 +89,7 @@ class FinanceController extends Controller
     	return $loans;
     }
     public function loan_fetch(Request $request){
+        return $request->all();
     	$loan = LoanMast::with('instalments')->where('id',$request->id)->first();
         // return $loan;
         $instalment_start_date = $request->instalment_start_date;
