@@ -286,7 +286,7 @@
 						var total = $('#amount_hidden').val();
 
 						$('input[name="total_amount"]').val(total);
-						$('#tbody').html(res);
+						// $('#tbody').html(res);
 
 					}
 				});

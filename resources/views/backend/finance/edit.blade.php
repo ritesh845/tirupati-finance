@@ -39,6 +39,16 @@
 					    @enderror
 					</div>
 					<div class="col-md-6 form-group">
+						{{Form::label('total_amount','Total Amount',['class' => 'required'])}}
+						{{Form::input('text','total_amount',old('total_amount') ?? $loan->total_amount,['class' => 'form-control','oninput' =>"this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"])}}
+						@error('total_amount')
+					        <span class="text-danger" role="alert">
+					            <strong>{{ $message }}</strong>
+					        </span>
+					    @enderror
+					</div>
+
+					<div class="col-md-6 form-group">
 						{{Form::label('no_of_instalment','Number Of Instalment',['class' => 'required'])}}
 						{{Form::input('text','no_of_instalment',old('no_of_instalment') ?? $loan->no_of_instalment,['class' => 'form-control','oninput' =>"this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"])}}
 						@error('no_of_instalment')
