@@ -1,6 +1,7 @@
 <?php
 
 use App\User;
+const APPWEBSITE = 'www.tirupati-finance.com';
 const APPNAME = 'Tirupati Finance';
 const GSTNO = '23BVPPB930101Z8';
 const APPADDRESS = 'Old Bus Stand, Super Market, Khachrod, Dist. Ujjain (M.P.) ';

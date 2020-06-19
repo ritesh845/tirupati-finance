@@ -122,7 +122,7 @@
         <div class="row">
           <div class="col-xl-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
             <div class="icon-box">
-              <div class="icon"><i class="bx bxl-dribbble"></i></div>
+              <div class="icon"><img src="{{asset('images/two-wheeler-loan-img-new.jpg')}}" style="width: 100%;height: 116px;"></div>
               <h4><a href="">Two-Wheeler Finance</a></h4>
               <p>Tirupati Finance easily provide bike Finance facily on your location</p>
             </div>
@@ -130,7 +130,7 @@
 
           <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
             <div class="icon-box">
-              <div class="icon"><i class="bx bx-file"></i></div>
+              <div class="icon"><img src="{{asset('images/four-wheeler.png')}}" style="width: 100%;height: 116px;"></div>
               <h4><a href="">Four-Wheeler Finance</a></h4>
               <p>Tirupati Finance easily provide car and other four wheeler Finance facily on your location</p>
             </div>
@@ -138,7 +138,9 @@
 
           <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in" data-aos-delay="300">
             <div class="icon-box">
-              <div class="icon"><i class="bx bx-tachometer"></i></div>
+              <div class="icon">
+                <img src="{{asset('images/loan1.jpeg')}}" style="width: 100%;height: 116px;">
+              </div>
               <h4><a href="">Loan Details</a></h4>
               <p>Your current and past loan details show</p>
             </div>
@@ -146,7 +148,7 @@
 
           <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in" data-aos-delay="400">
             <div class="icon-box">
-              <div class="icon"><i class="bx bx-layer"></i></div>
+              <div class="icon"><img src="{{asset('images/loan2.png')}}" style="width: 100%;height: 116px;"></div>
               <h4><a href="">Instalment Payment Reciept</a></h4>
               <p>Easily generate after instalment payment reciept</p>
             </div>

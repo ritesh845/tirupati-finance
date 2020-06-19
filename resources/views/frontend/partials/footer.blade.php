@@ -75,7 +75,7 @@
 
     <div class="container footer-bottom clearfix">
       <div class="copyright">
-        Copyright &copy; 2020 <strong><span>Tirupati Finance</span></strong>. All Rights Reserved
+        Copyright &copy; 2020 <strong><span>{{APPWEBSITE}}</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
    
