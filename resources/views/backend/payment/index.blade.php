@@ -8,28 +8,28 @@
 				Payment	Details			
 			</div>
 			<div class="card-body">
-				<div class="row">
-					<div class="col-md-3 form-group">
-						{{Form::label('txn_id','Transaction ID')}}
-						{{Form::input('text','txn_id','',['class' => 'form-control'])}}	
-					</div>
-					<div class="col-md-3 form-group">
-						{{Form::label('status','Status')}}
-						{{Form::select('status',PAYMENTSTATUS,'2',['class' => 'form-control'])}}
-					</div>
-					<div class="col-md-3 form-group">
-						{{Form::label('start_date','Start Date')}}
-						{{Form::input('text','start_date','',['class' => 'form-control datepicker', 'readonly' => 'readonly'])}}	
-					</div>
-					<div class="col-md-3 form-group">
-						{{Form::label('end_date','End Date')}}
-						{{Form::input('text','end_date','',['class' => 'form-control datepicker', 'readonly' => 'readonly'])}}	
-					</div>
-					<div class="col-md-12 form-group">
-						{{Form::submit('Filter',['class' => 'btn btn-sm btn-primary btnFilter'])}}
-					</div>
+				<!--<div class="row">-->
+				<!--	<div class="col-md-3 form-group">-->
+				<!--		{{Form::label('txn_id','Transaction ID')}}-->
+				<!--		{{Form::input('text','txn_id','',['class' => 'form-control'])}}	-->
+				<!--	</div>-->
+				<!--	<div class="col-md-3 form-group">-->
+				<!--		{{Form::label('status','Status')}}-->
+				<!--		{{Form::select('status',PAYMENTSTATUS,'2',['class' => 'form-control'])}}-->
+				<!--	</div>-->
+				<!--	<div class="col-md-3 form-group">-->
+				<!--		{{Form::label('start_date','Start Date')}}-->
+				<!--		{{Form::input('text','start_date','',['class' => 'form-control datepicker', 'readonly' => 'readonly'])}}	-->
+				<!--	</div>-->
+				<!--	<div class="col-md-3 form-group">-->
+				<!--		{{Form::label('end_date','End Date')}}-->
+				<!--		{{Form::input('text','end_date','',['class' => 'form-control datepicker', 'readonly' => 'readonly'])}}	-->
+				<!--	</div>-->
+				<!--	<div class="col-md-12 form-group">-->
+				<!--		{{Form::submit('Filter',['class' => 'btn btn-sm btn-primary btnFilter'])}}-->
+				<!--	</div>-->
 
-				</div>
+				<!--</div>-->
 				<hr>
 				<div class="row">
 					<div class="col-md-12 table-responsive">
