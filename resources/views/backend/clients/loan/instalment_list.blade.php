@@ -15,12 +15,12 @@
 
 	<tr>
 		<td>{{$count}}</td>
-
 		<td>
-			{{Form::input('text','premium[]',$instalment->premium,['class'=>'form-control premium','readonly' => 'readonly'])}}</td>
+			{{Form::input('text','premium[]',$instalment->premium,['class'=>'form-control premium','readonly' => 'readonly'])}}
+		</td>
 		<td>
 			{{Form::input('text','instalment_date[]',date('Y-m-d',strtotime($date)),['class'=>'form-control datepicker'])}}
-			{{Form::hidden('instalment_no[]',$count)}}
+			{{-- {{Form::hidden('instalment_no[]',$count)}} --}}
 		</td>
 	</tr>
 		@php

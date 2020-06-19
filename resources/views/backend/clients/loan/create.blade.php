@@ -281,12 +281,12 @@
 					data:{id:id,instalment_start_date:instalment_start_date},
 					success:function(res){
 
-						// console.log(res)		
+						console.log(res)		
 						$('#instalmentBody').empty().html(res);
 						var total = $('#amount_hidden').val();
 
 						$('input[name="total_amount"]').val(total);
-						// $('#tbody').html(res);
+						$('#tbody').html(res);
 
 					}
 				});
