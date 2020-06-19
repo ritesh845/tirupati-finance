@@ -24,4 +24,9 @@ class LoanController extends Controller
         // return $loan;
         return view('backend.clients.loan.noc.index',compact('loan'));
     }
+    public function seizing_form($id){
+        $loan =  ClientLoan::with('client')->find($id);
+        // return $loan;
+        return view('backend.clients.loan.seizing.index',compact('loan'));
+    }
 }
