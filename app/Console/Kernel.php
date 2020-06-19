@@ -26,7 +26,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->call('App\Http\Controllers\HomeController@beforeDateInstalmentReminder')->dailyAt('10:00');
+        
+$schedule->call('App\Http\Controllers\HomeController@beforeDateInstalmentReminder')->everyMinute();
     }
 
     /**
