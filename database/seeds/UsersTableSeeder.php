@@ -15,29 +15,29 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-    	Role::create(
-    		[
-	    		'id'    => '1',
-	    		'name'  => 'super_admin',
-    		]    		
-    	);
-        Role::create(
-            [
-                'id'    => '2',
-                'name'  => 'admin',
-            ]       
-        );
-        Role::create([
-                'id'    => '3',
-                'name'  => 'employee'
-            ]
-        );
-        Role::create(
-            [
-                'id'    => '4',
-                'name'  => 'client',  
-            ]       
-        );
+    	// Role::create(
+    	// 	[
+	    // 		'id'    => '1',
+	    // 		'name'  => 'super_admin',
+    	// 	]    		
+    	// );
+     //    Role::create(
+     //        [
+     //            'id'    => '2',
+     //            'name'  => 'admin',
+     //        ]       
+     //    );
+     //    Role::create([
+     //            'id'    => '3',
+     //            'name'  => 'employee'
+     //        ]
+     //    );
+     //    Role::create(
+     //        [
+     //            'id'    => '4',
+     //            'name'  => 'client',  
+     //        ]       
+     //    );
 
         $user = User::create([
         	'name'              => 'Super Admin',
@@ -53,8 +53,8 @@ class UsersTableSeeder extends Seeder
 
         $user1 = User::create([
             'name'              => 'Tirupati Finance',
-            'email'             => 'tirupatifinance@gmail.com',
-            'mobile'             => '1234567891',
+            'email'             => 'tr-finance@triupati-finance.com',
+            'mobile'             => '7987331942',
             'password'          => Hash::make('admin@845'),
             'email_verified_at' => date('Y-m-d H:i:s'),
             'mobile_verified_at' => date('Y-m-d H:i:s'),

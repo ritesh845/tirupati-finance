@@ -128,4 +128,8 @@ class PaymentController extends Controller
       SendCode::sendCode($send);
       return back()->with('success','Instalment Paid and Message Sent to client.');
     }
+    
+    public function payment_filter(){
+
+    }
 }
