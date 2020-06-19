@@ -26,6 +26,7 @@ Route::get('/loan/delete/{id}','Backend\ClientsController@loanDelete')->name('lo
 Route::get('/client_loan_fetch/{id}','Backend\ClientsController@client_loan_fetch')->name('loan.fetch');
 
 Route::get('/loan/noc/{id}','Backend\LoanController@noc_form')->name('loan.noc');
+Route::get('/loan/seizing/{id}','Backend\LoanController@seizing_form')->name('loan.seizing');
 
 
 

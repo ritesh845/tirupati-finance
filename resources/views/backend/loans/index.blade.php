@@ -19,6 +19,7 @@
 								<th>Vehicle Number</th>
 								<th>No. of Instalment</th>
 								<th>Finance Amount</th>
+								<th>Total Amount</th>
 								<th>Status</th>
 								<th>Action</th>
 							</tr>
@@ -35,6 +36,7 @@
 								<td>{{$clientLoan->vehicle_number !='' ? $clientLoan->vehicle_number : '-'}}</td>
 								<td>{{$clientLoan->loan_mast->no_of_instalment}}</td>
 								<td>{{$clientLoan->finance_amount}}</td>
+								<td>{{$clientLoan->total_amount}}</td>
 								<td>{{Arr::get(LOANSTATUS,$clientLoan->status)}}</td>
 								<td>
 									{{-- <a href="{{route('loan.edit',$clientLoan->id)}}" ><i class="btn fa fa-edit text-success"></i></a> --}}

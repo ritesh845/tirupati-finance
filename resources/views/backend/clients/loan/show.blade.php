@@ -8,7 +8,7 @@
 				Loan Details
 				@role('admin|Employee')
 				<a href="{{route('client.show',$clientLoan->client_id)}}" class="btn btn-sm btn-primary pull-right ml-2"><i class="fa fa-angle-left"></i> Back</a>	
-				<a href="" class="btn btn-sm btn-primary pull-right ml-2">SEIZING</a>
+				<a href="{{route('loan.seizing',$clientLoan->id)}}" class="btn btn-sm btn-primary pull-right ml-2">SEIZING</a>
 				<a href="{{route('loan.noc',$clientLoan->id)}}" class="btn btn-sm btn-primary pull-right ml-2">NOC Report</a>
 				@endrole
 				@role('client')
@@ -78,7 +78,7 @@
 										<td>
 											@if($instalment->pay == 0)
 												{{-- @if($instalment->after == 0) --}}
-													<a href="{{route('payment.show',$instalment->id)}}" class="btn btn-sm btn-success">Paytm</a>
+													{{-- <a href="{{route('payment.show',$instalment->id)}}" class="btn btn-sm btn-success">Paytm</a> --}}
 												@role('admin')
 													<button type="button" class="btn btn-primary modelId" id="modelId" data-id="{{$instalment->id}}">Paid</button>
 												@endrole
@@ -89,7 +89,7 @@
 											@elseif($instalment->pay == 2)
 												After apporval reciept generate
 											@else
-												<a href="{{route('instalment.reciept',$instalment->id)}}" class="btn btn-sm btn-primary">Reciept Generate</a>
+												<a href="{{route('instalment.reciept',$instalment->id)}}" class="btn btn-sm btn-success">Reciept Generate</a>
 											@endif
 										</td>
 									</tr>
